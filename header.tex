@@ -130,15 +130,15 @@
     papersize={379pt, 699pt},
     textwidth=345pt,
     textheight=596pt,
-    left=17pt,
-    top=54pt,
-    right=17pt
+    left=5pt,
+    top=40pt,
+    right=5pt
   }
 \fi
 
 \ifx \nisofficial \undefined
 \let\@real@maketitle\maketitle
-\renewcommand{\maketitle}{\@real@maketitle\begin{center}\begin{minipage}[c]{0.9\textwidth}\centering\footnotesize These notes are scribed by me, and it is difficult to avoids errors. \end{minipage}\end{center}}
+\renewcommand{\maketitle}{\@real@maketitle\begin{center}\begin{minipage}[c]{0.9\textwidth}\centering\footnotesize Waring: These notes are scribed by me, and it is difficult to avoids errors. \end{minipage}\end{center}}
 \else
 \fi
 
