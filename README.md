@@ -1,5 +1,7 @@
 # Notes-on-xx
-My notes on something
+My notes about some free open courses, and thanks [Dexter Chua](https://github.com/dalcde) for providing his template.
+
+If you have any problem about copyright, please contact me.
 
 ## Available Subject
 
