@@ -23,6 +23,7 @@
     \begin{itemize}
         \item Introduction
         \item Convexity I: Sets and Functions
+        \item Convexity II: Optimization Basics
     \end{itemize}
     \item \textbf{Algorithms I: First-order methods}
     \item \textbf{Theory II: Duality and optimality}
@@ -32,38 +33,6 @@
 
 \tableofcontents
 
-% \setcounter{section}{0}
-% \section{Introduction}
-
-
-% \begin{defi}[Optimization problem] 
-%     \begin{align*}
-%         \min _{x \in D} & \quad f(x) \\
-%         \text { subject to } &\quad g_{i}(x) \leq 0, \ i=1, \ldots, m \\
-%         &\quad h_{j}(x)=0, \ j=1, \ldots, r
-%     \end{align*}
-% \end{defi}
-% Here $D = \dom (f) \cap \bigcap_{i=1}^{m} \dom (g_{i}) \cap \bigcap_{j=1}^{r} \dom(h_j)$, common domain of all functions.
-
-% \begin{figure}[htbp] 
-%   \centering 
-%   \includegraphics[width=0.6\textwidth]{img/convex_vs_nonconvex.pdf} 
-% \end{figure}
-
-% This is a \textbf{convex optimization problem} provided the functions $f$ and $g_i, i=1,\ldots,m$ are convex, and  $h_j, j=1,\ldots,r$ are affine:
-% \[
-%     h_j (x) = a_{j}^{T}x + b_j, \quad j =1,\ldots,r
-% \]
-
-% For convex optimization problem, \textbf{local minima are global minima}.
-% Formally, if $x$ is feasible---$x \in D$, and satisfies all constraints and minimizes $f$ in a local neighborhood,
-% \[
-%     f(x) \leq f(y) \text{\ for \ all \ feasible} \ y, \ \left\lVert x -y \right\rVert_2 \leq \rho
-% \]
-% then
-% \[
-%     f(x) \leq f(y) \text{\ for \ all \ feasible} \ y
-% \]
 
 \section{Convexity I: Sets and Functions}
 \subsection{Convex sets}
@@ -115,7 +84,7 @@
   \end{align*}
   \item \textbf{Supporting hyperplane theorem:} a boundary point of a convex set has a supporting hyperplane passing through it. Formally, if $C$ is a nonempty convex set, and $x_0 \in \text{bd}(C)$, then there exists $a$ such that 
   \begin{equation}
-    C \subseteq \{x : a^T x \leq a^T x_0\} 
+    C \subseteq \{x : a^T x \leq a^T x_0\}  \nonumber 
   \end{equation}
 \end{enumerate}
 
@@ -134,11 +103,11 @@
   is convex for any $a, b$
   \item \textbf{Affine images and preimages:} if $f(x) = Ax +b$ and $C$ is convex then 
   \begin{equation}
-    f(C) = \{f(x) : x \in C\}
+    f(C) = \{f(x) : x \in C\} \nonumber
   \end{equation}
   is convex, and if $D$ is convex then 
   \begin{equation}
-    f^{-1}(D) = \{x: f(x) \in D\}
+    f^{-1}(D) = \{x: f(x) \in D\} \nonumber
   \end{equation}
   is convex
   \item \textbf{Perspective images and preimages:} the perspective function is $P : \mathbb{R}^n \times \mathbb{R}_{++} \rightarrow \mathbb{R}^n$ where $ \mathbb{R}_{++}$ denotes positive reals,
@@ -310,6 +279,340 @@ and all $x, y \in \dom (f)$, so that
   \subitem $f$ is concave if $h$ is concave and nondecreasing in each argument, $g$ is concave
   \subitem $f$ is concave if $h$ is concave and nonincreasing in each argument, $g$ is convex
 \end{enumerate}
+
+\section{Convexity II: Optimization Basics}
+\subsection{Optimization terminology}
+\begin{figure}[htbp] 
+  \centering 
+  \includegraphics[width=0.6\textwidth]{img/convex_vs_nonconvex.pdf} 
+\end{figure}
+
+\begin{defi}[Optimization problem] 
+    \begin{align*}
+        \min _{x \in D} & \quad f(x) \\
+        \text { subject to } &\quad g_{i}(x) \leq 0, \ i=1, \ldots, m \\
+        &\quad h_{j}(x)=0, \ j=1, \ldots, r
+    \end{align*}
+  here $D = \dom (f) \cap \bigcap_{i=1}^{m} \dom (g_{i}) \cap \bigcap_{j=1}^{r} \dom(h_j)$, common domain of all functions.
+\end{defi}
+
+\begin{defi}[Convex optimization problem] 
+  \begin{align*}
+      \min _{x \in D} & \quad f(x)  \\
+      \text { subject to } &\quad g_{i}(x)\leq 0, \ i=1, \ldots, m \\
+      & \quad  Ax = b 
+  \end{align*}
+  where $f$ and $g_i, i= 1,\cdots,m $ are all convex, and the optimization domain is $D = \dom (f) \cap \bigcap_{i=1}^{m} \dom (g_{i})$.
+\end{defi}
+
+% This is a \textbf{convex optimization problem} provided the functions $f$ and $g_i, i=1,\ldots,m$ are convex, and  $h_j, j=1,\ldots,r$ are affine:
+% \[
+%     h_j (x) = a_{j}^{T}x + b_j, \quad j =1,\ldots,r
+% \]
+
+For convex optimization problem, \textbf{local minima are global minima}.
+Formally, if $x$ is feasible---$x \in D$, and satisfies all constraints and minimizes $f$ in a local neighborhood,
+\[
+    f(x) \leq f(y) \text{\ for \ all \ feasible} \ y, \ \left\lVert x -y \right\rVert_2 \leq \rho
+\]
+then
+\[
+    f(x) \leq f(y) \text{\ for \ all \ feasible} \ y
+\]
+
+
+\noindent \textbf{Terminologies:}
+\begin{enumerate}
+  \item $f$ is called criterion or objective function
+  \item $g_i$ is called inequality constraint function
+  \item If $x \in D, g_i(x) \leq 0, i= 1,\cdots, m$, and $Ax = b$ then $x$ is called a feasible point
+  \item The minimum of $f(x)$ over all feasible points $x$ is called the optimal value, written $f^*$
+  \item If $x$ is feasible and $f(x) = f^*$, then $x$ is called optimal; also called a solution, or a minimizer
+  \item If $x$ is feasible and $f(x) \leq f^* + \epsilon$, then $x$ is called $\epsilon$-suboptimal
+  \item If $x$ is feasible and $g_i(x) = 0$, then we say $g_i$ is active at $x$
+  \item Convex minimization can be reposed as concave maximization, i.e.  min $f(x) \Leftrightarrow$ max $-f(x)$, both are called convex optimization problems
+  \item the optimization problem can be rewritten as 
+  \[
+    \min_x f(x) \quad \text{subject to} \ x \in C
+  \]
+  where $C$ is the feasible set. Hence the formulation is complete general. With $I_C$ the indicator of $C$, it can also be written as the unconstrained form
+  \[
+    \min_x \ f(x) + I_C(x)
+  \]
+\end{enumerate}
+
+\begin{defi}[Solution set] 
+  Let $X_{opt}$ be the set of all solutions of convex problem, written 
+  \begin{align*}
+    X_{opt} = & \arg \min  \quad  \quad \ f(x) \\
+      & \text { subject to }  \quad g_{i}(x) \leq 0, \ i=1, \ldots, m \\
+      & \quad  \quad \quad \quad  \quad \quad Ax = b 
+  \end{align*}
+\end{defi}
+\noindent \textbf{Two key properties:}
+\begin{enumerate}
+  \item $X_{opt}$ is a convex set, and it can be proofed using definitions. If $x, y$ are solutions, then for $0 \leq t \leq 1$, $t(x + (1-t)y)$ is also a solution
+  \item If $f$ is strictly convex, then solution is unique, i.e., $X_{opt}$ contains one element 
+\end{enumerate}
+
+\subsection{First-order optimality condition}
+\begin{defi}[First-order optimality condition]
+  For a convex problem
+  \[
+    \min_x f(x) \quad \text{subject to} \ x \in C
+  \]
+  and differentiable $f$, a feasible point $x$ is optimal if and only if 
+  \[
+    \nabla f(x)^T (y-x)\geq 0  \quad \text{for all} \ y \in C
+  \]
+this means all feasible directions from $x$ are aligned with gradient $\nabla f(x)$
+\end{defi}
+
+\textbf{Important case:} if $C \in \mathbb{R}^n$ (unconstrained optimization), then optimality condition reduces to familiar $\nabla f(x) = 0$.
+
+\subsubsection{Example: quadratic minimization}
+Consider minimizing the quadratic function
+\begin{equation}
+  f(x) = \frac{1}{2}x^T Q x + b^T x + c \nonumber
+\end{equation}
+where $Q \succeq 0$. The first-order condition says that solution satisfies
+\begin{equation}
+  \nabla f(x) = Q x + b = 0 \nonumber
+\end{equation}
+\begin{enumerate}
+  \item if $Q \succeq 0$, then there is a unique solution $x = -Q ^{-1}b$
+  \item if $Q $ is singular and $b \notin \text{col}(Q)$, then there is no solution (i.e., $\text{min}_x \ f(x) = - \infty$)
+  \item if $Q $ is singular and $b \in \text{col}(Q)$, then there are infinitely many solutions
+  \begin{equation}
+    x = -Q^+ b + z, \quad z \in \text{null}(Q) \nonumber
+  \end{equation}
+  where $Q^+$ is the pseudoinverse of $Q$. Note: $\text{null}(Q) = \{z \in C^n : Qz = 0 \} $
+\end{enumerate}
+
+\subsubsection{Example: equality-constrained minimization}
+Consider the equality-constrained convex problem
+\begin{equation}
+  \min_x f(x) \quad \text{subject to} \ Ax = b \nonumber
+\end{equation}
+with $f$ differentiable. Let's prove Lagrange multiplier optimality condition
+\begin{equation}
+  \nabla f(x) + A^T u = 0 \quad \text{for some} \ u \nonumber
+\end{equation}
+According to first-order optimality, solution $x$ satisfies $Ax = b$ and 
+\begin{equation}
+  \nabla f(x)^T (y-x) \geq 0 \quad \text{for all} \ y \ \text{such that} \ Ay = b \nonumber
+\end{equation}
+This is equivalent to 
+\begin{equation}
+  \nabla f(x)^T v = 0  \ \text{for all} \ v \in \text{null}(A) \nonumber
+\end{equation}
+Result follows because $\text{null}(A)^{\perp} = \text{row}(A)$.
+
+\subsubsection{Example: projection onto a convex set}
+Consider projection onto convex set $C$
+\begin{equation}
+  \min_x \Vert a- x \Vert_2^2 \quad \text{subject to} \ x \in C \nonumber
+\end{equation}
+First-order optimality condition says that the solution $x$ satisfies 
+\begin{equation}
+  \nabla f(x)^T (y-x) = (x - a)^T(y-x) \geq 0 \quad \text{for all} \ y \in C \nonumber
+\end{equation}
+Equivalent, this says that
+\begin{equation}
+  a - x \in \mathcal{N}_C (x) \nonumber
+\end{equation}
+where recall $\mathcal{N}_C (x) $ is the normal cone to $C$ at $x$. 
+
+\subsection{Partial optimization}
+We can always partial optimize a convex problem and retain convexity, e.g.
+\begin{equation}
+  \begin{array}{ll}
+    \ \min\limits_{x_{1}, x_{2}} & f\left(x_{1}, x_{2}\right) \\
+    \text{ subject to } & g_{1}\left(x_{1}\right) \leq 0 \\
+    & g_{2}\left(x_{2}\right) \leq 0
+  \end{array}
+  \Longleftrightarrow 
+  \begin{array}{ll}
+    \ \min\limits_{x_{1}} & \tilde{f}\left(x_{1}\right) \\
+    \text { subject to } & g_{1}\left(x_{1}\right) \leq 0 \nonumber \\
+    {} & {}
+  \end{array}
+\end{equation}
+where $\tilde{f}\left(x_{1}\right) = \min\{ f(x_1, x_2) : g_2(x_2) \leq 0\}$. The right problem is convex if the left problem is.
+
+\subsubsection{Excample: hinge form of SVMs}
+Recall the SVM problem
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{\beta, \beta_{0}, \xi} & \dfrac{1}{2}\Vert\beta\Vert_{2}^{2}+C \sum\limits_{i=1}^{n} \xi_{i} \\\text { subject to } & \xi_{i} \geq 0, y_{i}\left(x_{i}^{T} \beta+\beta_{0}\right) \geq 1-\xi_{i}, i=1, \ldots, n \nonumber
+  \end{array}
+\end{equation}
+Rewrite the constraints as $\xi_i \geq \max\{0, 1 - y_{i}\left(x_{i}^{T} \beta+\beta_{0}\right)\}$. Indeed we can argue that we have $=$ at solution. Therefor plugging in for optimal $\xi$ gives the hinge form of SVMs:
+\begin{equation}
+  \min\limits_{\beta, \beta_{0}}\dfrac{1}{2}\Vert\beta\Vert_{2}^{2}+C \sum\limits_{i=1}^{n} [ 1 - y_{i}\left(x_{i}^{T} \beta+\beta_{0}\right) ]_+ \nonumber
+\end{equation}
+where $a_+ = \max \{0, a\}$ is called the hinge function
+
+\subsection{Transformations and change of variables}
+If $h : \mathbb{R} \rightarrow \mathbb{R}$ is a monotone increasing translation, then
+\begin{equation}
+  \min_x f(x) \quad \text{subject to} \ x \in C \ \Longleftrightarrow \ \min_x h(f(x)) \quad \text{subject to} \ x \in C \nonumber
+\end{equation}
+Similarly, inequality or equality constraints can be transformed and yield equivalent optimization problem. This means we can use this to reveal the `hidden convexity' of a problem.
+
+If $\phi : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is one-to-one, and its image covers feasible set $C$, then we can change variables in an optimization problem:
+\begin{equation}
+  \min_x f(x) \quad \text{subject to} \ x \in C \ \Longleftrightarrow \ \min_y f(\phi(y)) \quad \text{subject to} \ \phi(y) \in C \nonumber
+\end{equation}
+
+\subsubsection{Example: geometric programming}
+A monomial is a function $f : \mathbb{R}^n_{++} \rightarrow \mathbb{R}$ of the form
+\begin{equation}
+  f(x) = \gamma x_1^{a_1}x_2^{a_2}\cdots x_n^{a_n} \nonumber
+\end{equation}
+for $\gamma > 0, a_1, \cdots, a_n \in \mathbb{R}$. A posynomial is a sum of monomials,
+\begin{equation}
+  f(x) = \sum_{k=1}^{p}\gamma_k x_1^{a_k1}x_2^{a_k2}\cdots x_n^{a_kn} \nonumber
+\end{equation}
+
+A geometric program is of the form
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x} & \quad f(x)  \\
+    \text { subject to } &\quad g_{i}(x)\leq 0, \ i=1, \ldots, m \\ \nonumber
+    & \quad h_j(x) = 1, \ j = 1, \cdots, r
+\end{array}
+\end{equation}
+where $f, g_i, i = 1, \cdots, m$ are posynomials and $h_j, j = 1,\cdots, r$ are monomials. This is nonconvex.
+
+Given $f(x) = \gamma x_1^{a_1}x_2^{a_2}\cdots x_n^{a_n}$, let $y_i = \log x_i$ and rewrite this as 
+\begin{equation}
+  \gamma (e^{y_1})^{a_1} (e^{y_2})^{a_2}  \cdots (e^{y_n})^{a_n} = e^{a^T y + b} \nonumber 
+\end{equation}
+for $ b = \log \gamma$. Also, a posynomial can be written as $\sum_{k=1}^p e^{a_k^T y + b_k}$. With this variable substitution, and after taking logs, a geometric program is equivalent to
+\begin{equation}
+  \begin{array}{ll}
+  \min\limits_x  & \log(\sum\limits_{k=1}^{p_0} e^{a_{0k}^T y + b_{0k}}) \\
+  \text{subject to}  &  \log(\sum\limits_{k=1}^{p_i} e^{a_{ik}^T y + b_{ik}}) \leq 0, \ i = 1, \cdots, m \\ \nonumber
+  & c_j^T y + d_j = 0, \ j = 1, \cdots, r
+\end{array}
+\end{equation} 
+This is convex, recalling the convexity of soft max functions.
+
+\subsection{Eliminating equality constraints}
+Important special case of change of variables: eliminating equality constraints. Given the problem 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x} & \quad f(x)  \\
+    \text { subject to } &\quad g_{i}(x)\leq 0, \ i=1, \ldots, m \\ \nonumber
+    & \quad Ax = b
+\end{array}
+\end{equation}
+we can always express any feasible point as $x = My + x_0$, where $Ax_0 = b$ and $\text{col}(M) = \text{null}(A)$. Hence the above is equivalent to 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{y} & \quad f(My + x_0)  \\
+    \text { subject to } &\quad g_{i}(My + x_0)\leq 0, \ i=1, \ldots, m \\ \nonumber
+\end{array}
+\end{equation}
+
+Note: this is fully general but not always a good idea (practically).
+
+\subsection{Introducing slack variables}
+Essentially opposite to eliminating equality constraints: introducing slack variables. Given the problem
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x} & \quad f(x)  \\
+    \text { subject to } &\quad g_{i}(x)\leq 0, \ i=1, \ldots, m \\ \nonumber
+    & \quad Ax = b
+\end{array}
+\end{equation}
+we can transform the inequality constraints via
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x, s} & \quad f(x)  \\
+    \text { subject to } & \quad s_i \geq 0, \ i=1, \ldots, m \\ \nonumber
+    & \quad g_{i}(x) + s_i = 0, \ i=1, \ldots, m \\
+    & \quad Ax = b
+\end{array}
+\end{equation}
+Note: this is no longer convex unless $g_i, i= 1, \cdots, n$ are affine.
+
+\subsection{Relaxing nonaffine equalities}
+Given an optimization problem
+\begin{equation}
+  \min_x f(x) \quad \text{subject to} \ x \in C \nonumber
+\end{equation}
+we can always take an enlarged constraint set $\tilde{C} \supseteq C$ and consider 
+\begin{equation}
+  \min_x f(x) \quad \text{subject to} \ x \in \tilde{C} \nonumber
+\end{equation}
+This is called a relaxation and its optimal value is always smaller or equal to that of the original problem. An important special case: relaxing nonaffine equality constraints, i.e., 
+\begin{equation}
+  h_j(x) = 0, \ j=1,\cdots, r \nonumber
+\end{equation}
+where $h_j, j = 1,\cdots, r$ are convex but nonaffine, are replaced with
+\begin{equation}
+  h_j(x) \leq 0, \ j=1,\cdots, r \nonumber
+\end{equation}
+
+\subsubsection{Example: maximum utility problem}
+The maximum utility problem models investment/consumption:
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x, b} & \quad \sum_{t=1}^T \alpha_t u(x_t)  \\
+    \text { subject to } &\quad b_{t+1} = b_t + f(b_t) - x_t, \ t=1, \ldots, T \\ \nonumber
+    & 0 \leq x_t \leq b_t, t = 1, \cdots, T
+\end{array}
+\end{equation}
+Here $b_t$ is the budget and $x_t$ is the amount consumed at time $t$; $f$ is an investment return function, $u$ utility function, both concave and increasing (Here, $f(0) =0$, and $b_0 > 0$ is given).
+
+\subsubsection{Example: principal components analysis}
+Given $X \in \mathbb{R}^{n \times p}$, consider the low rank approximation problem:
+\begin{equation}
+  \min_R \Vert X - R \Vert^2_F \quad \text{subject to} \ \rank(R) = k \nonumber
+\end{equation} 
+Here $\Vert A\Vert^2_F = \sum_{i=1}^n \sum_{j=1}^p A_{ij}^2$, the entrywise squared $\ell_2$ norm, and $\rank(A)$ denotes the rank of $A$. The problem is also called principal components analysis or PCA problem. Given $X = UDV^T$, singular value decomposition or SVD, the solution is
+\begin{equation}
+  R = U_k D_k V_k^T \nonumber
+\end{equation}
+where $U_k, V_k$ are the first $k$ columns of $U, V$ and $D_k$ is the first $k$ diagonal elements of $D$. That is, $R$ is reconstruction of $X$ from its first $k$ principal components.
+
+The PCA problem is not convex, but we can recast it. First rewrite as
+\begin{equation}
+  \begin{aligned}
+  \min_{Z \in \mathbb{S}^p} \Vert X - XZ \Vert^2_F \quad \text{subject to} \ \rank(Z) = k, Z \ \text{is a projection} \\
+  \Longleftrightarrow \max_{Z \in \mathbb{S}^p} tr(SZ) \quad \text{subject to} \ \rank(Z) = k, Z \ \text{is a projection} \nonumber 
+  \end{aligned}
+\end{equation} 
+where $S = X^T X$. Hence constraint set is the nonconvex set
+\begin{equation}
+  C = \{ Z \in   \mathbb{S}^p : \lambda_i(Z) \in \{0, 1\}, i = 1,\cdots, p, \tr(Z) = k \} \nonumber
+\end{equation}
+where $\lambda_i(Z), i = 1,\cdots, n$ are the eigenvalues of $Z$. Solution in this formulation is 
+\begin{equation}
+  Z = V_k V_k^T \nonumber
+\end{equation}
+where $V_k$ gives first $k$ columns of $V$.
+
+Now consider relaxing constraint set to $\mathcal{F}_k = \text{conv}(V)$, its convex hull. Note 
+\begin{equation}
+  \begin{aligned}
+  \mathcal{F}_k & = \{ Z \in   \mathbb{S}^p : \lambda_i(Z) \in [0, 1], i = 1,\cdots, p, \tr(Z) = k \} \nonumber \\
+   & = \{ Z \in   \mathbb{S}^p : 0 \preceq Z \preceq I, \tr(Z) = k \} 
+  \end{aligned}
+\end{equation}
+This set is called the Fantope of order $k$ and it is convex. Hence, the linear maximization over the Fantope, namely
+\begin{equation}
+  \max_{Z \in  \mathcal{F}_k} \quad \tr(SZ) \nonumber
+\end{equation}
+is a convex problem. Remarkably, this is equivalent to the original nonconvex PCA problem (admit the same solution).
+
+
+
+
+
+
 
 
 \end{document}
