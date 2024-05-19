@@ -24,6 +24,7 @@
         \item Introduction
         \item Convexity I: Sets and Functions
         \item Convexity II: Optimization Basics
+        \item Canonical Problem Forms
     \end{itemize}
     \item \textbf{Algorithms I: First-order methods}
     \item \textbf{Theory II: Duality and optimality}
@@ -608,11 +609,214 @@ This set is called the Fantope of order $k$ and it is convex. Hence, the linear 
 \end{equation}
 is a convex problem. Remarkably, this is equivalent to the original nonconvex PCA problem (admit the same solution).
 
+\section{Canonical Problem Forms}
+The relationship among linear programs (LPs), quadratic programs (QPs), semidefinite programs (SDPs), second-order cone program (SOCPs) and cone programs is shown in the following figure.
+\begin{figure}[htbp] 
+  \centering 
+  \includegraphics[width=0.6\textwidth]{img/LPs_relationship.pdf} 
+\end{figure}
 
+\subsection{Linear program}
+\begin{defi}[Linear program]
+  A linear program is an optimization problem of the form
+  \[
+  \begin{array}{ll}
+      \min\limits_{x} & c^T x  \\
+      \text { subject to } & Dx \leq d \\ \nonumber
+      & Ax = b
+  \end{array} 
+  \]
+  and this is always a convex optimization problem.
+\end{defi}
 
+The standard form of LP is 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x} & c^T x  \\
+    \text { subject to } & x \geq 0 \\ \nonumber
+    & Ax = b
+\end{array} 
+\end{equation}
+any LP can be rewritten in standard form.
 
+\subsubsection{Excample: basis pursuit}
+Given $y \in \mathbb{R}^n$ and $X \in \mathbb{R}^{n \times p}$, where $p > n$. Suppose that we seek the sparest solution to underdetermined linear system $X \beta = y$. If using $\ell_0$ norm, it will be a nonconvex formulation. The $\ell_1$ approximation, often called basis pursuit
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{\beta} & \Vert \beta \Vert_1  \\ \nonumber
+    \text { subject to } & X \beta = y \\ 
+\end{array} 
+\end{equation}
+This problem can be reformulated as the LP form 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{\beta, z} & 1^T z  \\ \nonumber
+    \text { subject to } & z \geq \beta \\
+    & z \geq -\beta \\
+    & X \beta = y
+\end{array} 
+\end{equation}
 
+\subsubsection{Excample: Dantzig selector}
+Modification of previous problem, where we allow for $X \beta \approx y$, the Dantzig selector
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{\beta} & \Vert \beta \Vert_1  \\ \nonumber
+    \text { subject to } & \vert X^T (y-X \beta)\Vert_\infty \leq \lambda \\ \nonumber
+\end{array} 
+\end{equation}
+where $\lambda \geq 0$ is a tuning parameter. It can also be reformulated as a 
+LP.
 
+\subsection{Convex quadratic program}
+\begin{defi}[Convex quadratic program]
+  A convex quadratic program is an optimization problem of the form
+  \[
+  \begin{array}{ll}
+      \min\limits_{x} & c^T x + \dfrac{1}{2}x^T Qx \\
+      \text { subject to } & Dx \leq d \\ \nonumber
+      & Ax = b
+  \end{array} 
+  \]
+  where $Q \succeq  0$. Note that this problem is not convex when $Q \nsucceq 0$. From now on, when we say QP, we implicitly assume that $Q \succeq 0$.
+\end{defi}
 
+The standard form of QP is 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x} & c^T x + \dfrac{1}{2}x^T Qx \\
+    \text { subject to } & x \geq 0 \\ \nonumber
+    & Ax = b
+\end{array} 
+\end{equation}
+any QP can be rewritten in standard form.
 
+\subsubsection{Example: support vector machines}
+Given $y \in \{-1, 1\}^n$, $X \in \mathbb{R}^{n \times p}$ having rows $x_1, \cdots, x_n$, recall the SVM problem
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{\beta, \beta_{0}, \xi} & \dfrac{1}{2}\Vert\beta\Vert_{2}^{2}+C \sum\limits_{i=1}^{n} \xi_{i} \\\text { subject to } & \xi_{i} \geq 0, y_{i}\left(x_{i}^{T} \beta+\beta_{0}\right) \geq 1-\xi_{i}, i=1, \ldots, n \nonumber
+  \end{array}
+\end{equation}
+
+\subsection{Semidefinite program}
+\begin{defi}[Semidefinite program]
+  A semidefinite program is an optimization problem of the form
+  \[
+  \begin{array}{ll}
+      \min\limits_{x} & c^T x \\
+      \text { subject to } & x_1 F_1 + \cdots x_n F_n \succeq F_0 \\ \nonumber
+      & Ax = b
+  \end{array} 
+  \]
+  where $F_j \in \mathbb{S}^d$, for $j = 0,1,\cdots, n$, and $A \in \mathbb{R}^{m \times n}, c \in \mathbb{R}^{n}, b \in \mathbb{R}^{m}$.
+\end{defi}
+
+The standard form of SDP is 
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{X} & C \bullet X \\
+    \text { subject to } & A_i \bullet X = b_i, i= 1,\cdots, m \\ \nonumber
+    &X \succeq 0
+\end{array} 
+\end{equation}
+where $X \bullet Y  = \tr (XY)$ and any SDP can be rewritten in standard form.
+
+Note: $\mathbb{S}^n$ is space of $n \times n$ symmetric matrices, $\mathbb{S}^n_+$ is the space of positive semidefinite matrices, i.e.,
+\begin{equation}
+  \mathbb{S}^n_+ = \{ X \in \mathbb{S}^n : u^TXu \geq 0 \ \text{for all} \ u \in \mathbb{R}^n \} \nonumber
+\end{equation}
+$\mathbb{S}^n_{++}$ is the space of positive define matrices, i.e.,
+\begin{equation}
+  \mathbb{S}^n_{++} = \{ X \in \mathbb{S}^n : u^TXu > 0 \ \text{for all} \ u \in \mathbb{R}^n \setminus \{ 0\} \} \nonumber
+\end{equation}
+
+\subsubsection{Example: theta function}
+Let $G = (N, E)$ be an undirected graph, $N = \{1,\cdots, n\}$, $\omega(G)$ and $\chi (G)$ is the clique number and chromatic number of $G$, respectively. The Lovasz theta function is 
+\begin{equation}
+  \begin{array}{ll}
+    \vartheta (G) = \max\limits_{X} & 11^T \bullet X \\
+    \text { subject to } & I \bullet X = 1\\ \nonumber
+    & X_{ij} = 0, (i,j) \notin E \\
+    & X \succeq 0
+\end{array} 
+\end{equation}
+The Lovasz sandwich theorem: $\omega(G) \leq \vartheta(\overline{G}) \leq \chi (G)$, where $\overline{G} $ is the complement graph of $G$.
+
+\subsubsection{Example: trace norm minimization}
+Let $A: \mathbb{R}^{m \times n} \rightarrow \mathbb{R}^p$ be a linear map
+\begin{equation}
+  A(X)=\left(\begin{array}{c}
+    A_{1} \bullet X \\
+    \cdots \\ \nonumber
+    A_{p} \bullet X
+    \end{array}\right)
+\end{equation}
+for $A_1, \cdots, A_p \in \mathbb{R}^{m \times n}$ and $A_i \bullet X = \tr(A^T_i X)$. Finding lowest-rank solution to an underdetermined system, nonconvex
+\begin{equation}
+  \begin{array}{ll}
+     \min\limits_{X} & \rank(X) \\
+    \text { subject to } & A(X) = b\\ \nonumber
+\end{array} 
+\end{equation}
+Trace norm approximation:
+\begin{equation}
+  \begin{array}{ll}
+     \min\limits_{X} & \Vert X \Vert_{tr} \\
+    \text { subject to } & A(X) = b\\ \nonumber
+\end{array} 
+\end{equation}
+
+\subsection{Conic program}
+\begin{defi}[Conic program]
+  A conic program is an optimization problem of the form
+  \[
+  \begin{array}{ll}
+      \min\limits_{x} & c^T x \\
+      \text { subject to } & D(x) + d \in K \\ \nonumber
+      & Ax = b
+  \end{array} 
+  \]
+  where $c, x \in \mathbb{R}^n$, and $A\in \mathbb{R}^{m \times n}$, $b \in \mathbb{R}^m$. $D: \mathbb{R}^n \rightarrow Y$ is a linear map, $d \in Y$, for Euclidean space $Y$, $K \subseteq Y$ is a closed convex cone.
+\end{defi}
+Both LPs and SDPs are special cases of conic programming. For LPs, $K = \mathbb{R}^n_+$; for SDPs, $K = \mathbb{S}^n_+$.
+
+\begin{defi}[Second-order cone program]
+  A second-order cone program or SOCP is an optimization problem of the form
+  \[
+  \begin{array}{ll}
+      \min\limits_{x} & c^T x \\
+      \text { subject to } & \Vert D_i(x) + d_i \Vert_2 \leq e_i^T x + f_i, i=1, \cdots, p \\ \nonumber
+      & Ax = b
+  \end{array} 
+  \]
+\end{defi}
+This is indeed a cone program. Recall the second-order cone $Q = \{(x,t): \Vert x \Vert_2 \leq t \}$, we have 
+\begin{equation}
+  \Vert D_i(x) + d_i \Vert_2 \leq e_i^T x + f_i \Longleftrightarrow (D_i(x) + d_i, e_i^T x + f_i) \in Q_i \nonumber
+\end{equation}
+for second-order cone $Q_i$ of appropriate dimensions. Now take $K = Q_1 \times \cdots \times Q_p$.
+
+Observe that every LP is an SOCP and every SOCP is an SDP. Turns out that 
+\begin{equation}
+  \|x\|_{2} \leq t \Longleftrightarrow\left[\begin{array}{cc}t I & x \\x^{T} & t\end{array}\right] \succeq 0 \nonumber 
+\end{equation}
+hence any SOCP constraint can be written as an SDP constraint. The above is a special case of the Schur complement theorem: 
+\begin{equation}
+  \left[\begin{array}{cc}A & B \\B^{T} & C\end{array}\right] \succeq 0 \Longleftrightarrow A-B C^{-1} B^{T} \succeq 0 \nonumber
+\end{equation}
+for $A, C$ symmetric and $C \succ  0$.
+
+In addition, QPs are SOCPs, which can be seen by rewriting a QP as
+\begin{equation}
+  \begin{array}{ll}
+    \min\limits_{x, t} & c^T x + t \\
+    \text { subject to } &  Dx \leq d, \frac{1}{2}x^TQx \leq t \\ \nonumber
+    & Ax = b
+\end{array} 
+\end{equation}
+now write $\frac{1}{2}x^TQx \leq t \Leftrightarrow  \left\|\left(\frac{1}{\sqrt{2}} Q^{1 / 2} x, \frac{1}{2}(1-t)\right)\right\|_{2} \leq \frac{1}{2}(1+t)$. Thus we have established the hierachy.
+\begin{equation}
+  \text{LPs} \subseteq \text{QPs} \subseteq \text{SOCPs} \subseteq \text{SDPs} \subseteq \text{Conic programs} \nonumber
+\end{equation}
 \end{document}
