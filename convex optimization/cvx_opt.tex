@@ -27,6 +27,9 @@
         \item Canonical Problem Forms
     \end{itemize}
     \item \textbf{Algorithms I: First-order methods}
+    \begin{itemize}
+      \item Gradient Descent
+    \end{itemize}
     \item \textbf{Theory II: Duality and optimality}
     \item \textbf{Algorithms II: Second-order methods}
     \item \textbf{Advanced topics}
@@ -311,7 +314,7 @@ and all $x, y \in \dom (f)$, so that
 %     h_j (x) = a_{j}^{T}x + b_j, \quad j =1,\ldots,r
 % \]
 
-For convex optimization problem, \textbf{local minima are global minima}.
+\noindent For convex optimization problem, \textbf{local minima are global minima}.
 Formally, if $x$ is feasible---$x \in D$, and satisfies all constraints and minimizes $f$ in a local neighborhood,
 \[
     f(x) \leq f(y) \text{\ for \ all \ feasible} \ y, \ \left\lVert x -y \right\rVert_2 \leq \rho
@@ -369,7 +372,7 @@ then
 this means all feasible directions from $x$ are aligned with gradient $\nabla f(x)$
 \end{defi}
 
-\textbf{Important case:} if $C \in \mathbb{R}^n$ (unconstrained optimization), then optimality condition reduces to familiar $\nabla f(x) = 0$.
+\noindent \textbf{Important case:} if $C \in \mathbb{R}^n$ (unconstrained optimization), then optimality condition reduces to familiar $\nabla f(x) = 0$.
 
 \subsubsection{Example: quadratic minimization}
 Consider minimizing the quadratic function
@@ -387,7 +390,9 @@ where $Q \succeq 0$. The first-order condition says that solution satisfies
   \begin{equation}
     x = -Q^+ b + z, \quad z \in \text{null}(Q) \nonumber
   \end{equation}
-  where $Q^+$ is the pseudoinverse of $Q$. Note: $\text{null}(Q) = \{z \in C^n : Qz = 0 \} $
+  where $Q^+$ is the pseudoinverse of $Q$. 
+  
+  \textbf{Note:} $\text{null}(Q) = \{z \in C^n : Qz = 0 \} $
 \end{enumerate}
 
 \subsubsection{Example: equality-constrained minimization}
@@ -461,7 +466,7 @@ If $h : \mathbb{R} \rightarrow \mathbb{R}$ is a monotone increasing translation,
 \end{equation}
 Similarly, inequality or equality constraints can be transformed and yield equivalent optimization problem. This means we can use this to reveal the `hidden convexity' of a problem.
 
-If $\phi : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is one-to-one, and its image covers feasible set $C$, then we can change variables in an optimization problem:
+\noindent If $\phi : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is one-to-one, and its image covers feasible set $C$, then we can change variables in an optimization problem:
 \begin{equation}
   \min_x f(x) \quad \text{subject to} \ x \in C \ \Longleftrightarrow \ \min_y f(\phi(y)) \quad \text{subject to} \ \phi(y) \in C \nonumber
 \end{equation}
@@ -476,7 +481,7 @@ for $\gamma > 0, a_1, \cdots, a_n \in \mathbb{R}$. A posynomial is a sum of mono
   f(x) = \sum_{k=1}^{p}\gamma_k x_1^{a_k1}x_2^{a_k2}\cdots x_n^{a_kn} \nonumber
 \end{equation}
 
-A geometric program is of the form
+\noindent A geometric program is of the form
 \begin{equation}
   \begin{array}{ll}
     \min\limits_{x} & \quad f(x)  \\
@@ -486,7 +491,7 @@ A geometric program is of the form
 \end{equation}
 where $f, g_i, i = 1, \cdots, m$ are posynomials and $h_j, j = 1,\cdots, r$ are monomials. This is nonconvex.
 
-Given $f(x) = \gamma x_1^{a_1}x_2^{a_2}\cdots x_n^{a_n}$, let $y_i = \log x_i$ and rewrite this as 
+\noindent Given $f(x) = \gamma x_1^{a_1}x_2^{a_2}\cdots x_n^{a_n}$, let $y_i = \log x_i$ and rewrite this as 
 \begin{equation}
   \gamma (e^{y_1})^{a_1} (e^{y_2})^{a_2}  \cdots (e^{y_n})^{a_n} = e^{a^T y + b} \nonumber 
 \end{equation}
@@ -516,8 +521,7 @@ we can always express any feasible point as $x = My + x_0$, where $Ax_0 = b$ and
     \text { subject to } &\quad g_{i}(My + x_0)\leq 0, \ i=1, \ldots, m \\ \nonumber
 \end{array}
 \end{equation}
-
-Note: this is fully general but not always a good idea (practically).
+\textbf{Note:} this is fully general but not always a good idea (practically).
 
 \subsection{Introducing slack variables}
 Essentially opposite to eliminating equality constraints: introducing slack variables. Given the problem
@@ -537,7 +541,7 @@ we can transform the inequality constraints via
     & \quad Ax = b
 \end{array}
 \end{equation}
-Note: this is no longer convex unless $g_i, i= 1, \cdots, n$ are affine.
+\textbf{Note:} this is no longer convex unless $g_i, i= 1, \cdots, n$ are affine.
 
 \subsection{Relaxing nonaffine equalities}
 Given an optimization problem
@@ -596,7 +600,9 @@ where $\lambda_i(Z), i = 1,\cdots, n$ are the eigenvalues of $Z$. Solution in th
 \end{equation}
 where $V_k$ gives first $k$ columns of $V$.
 
-Now consider relaxing constraint set to $\mathcal{F}_k = \text{conv}(V)$, its convex hull. Note 
+\noindent Now consider relaxing constraint set to $\mathcal{F}_k = \text{conv}(V)$, its convex hull. 
+
+\noindent \textbf{Note:} 
 \begin{equation}
   \begin{aligned}
   \mathcal{F}_k & = \{ Z \in   \mathbb{S}^p : \lambda_i(Z) \in [0, 1], i = 1,\cdots, p, \tr(Z) = k \} \nonumber \\
@@ -629,7 +635,7 @@ The relationship among linear programs (LPs), quadratic programs (QPs), semidefi
   and this is always a convex optimization problem.
 \end{defi}
 
-The standard form of LP is 
+\noindent The standard form of LP is 
 \begin{equation}
   \begin{array}{ll}
     \min\limits_{x} & c^T x  \\
@@ -681,7 +687,7 @@ LP.
   where $Q \succeq  0$. Note that this problem is not convex when $Q \nsucceq 0$. From now on, when we say QP, we implicitly assume that $Q \succeq 0$.
 \end{defi}
 
-The standard form of QP is 
+\noindent The standard form of QP is 
 \begin{equation}
   \begin{array}{ll}
     \min\limits_{x} & c^T x + \dfrac{1}{2}x^T Qx \\
@@ -712,7 +718,7 @@ Given $y \in \{-1, 1\}^n$, $X \in \mathbb{R}^{n \times p}$ having rows $x_1, \cd
   where $F_j \in \mathbb{S}^d$, for $j = 0,1,\cdots, n$, and $A \in \mathbb{R}^{m \times n}, c \in \mathbb{R}^{n}, b \in \mathbb{R}^{m}$.
 \end{defi}
 
-The standard form of SDP is 
+\noindent The standard form of SDP is 
 \begin{equation}
   \begin{array}{ll}
     \min\limits_{X} & C \bullet X \\
@@ -722,7 +728,7 @@ The standard form of SDP is
 \end{equation}
 where $X \bullet Y  = \tr (XY)$ and any SDP can be rewritten in standard form.
 
-Note: $\mathbb{S}^n$ is space of $n \times n$ symmetric matrices, $\mathbb{S}^n_+$ is the space of positive semidefinite matrices, i.e.,
+\noindent \textbf{Note:} $\mathbb{S}^n$ is space of $n \times n$ symmetric matrices, $\mathbb{S}^n_+$ is the space of positive semidefinite matrices, i.e.,
 \begin{equation}
   \mathbb{S}^n_+ = \{ X \in \mathbb{S}^n : u^TXu \geq 0 \ \text{for all} \ u \in \mathbb{R}^n \} \nonumber
 \end{equation}
@@ -779,7 +785,8 @@ Trace norm approximation:
   \]
   where $c, x \in \mathbb{R}^n$, and $A\in \mathbb{R}^{m \times n}$, $b \in \mathbb{R}^m$. $D: \mathbb{R}^n \rightarrow Y$ is a linear map, $d \in Y$, for Euclidean space $Y$, $K \subseteq Y$ is a closed convex cone.
 \end{defi}
-Both LPs and SDPs are special cases of conic programming. For LPs, $K = \mathbb{R}^n_+$; for SDPs, $K = \mathbb{S}^n_+$.
+
+\noindent Both LPs and SDPs are special cases of conic programming. For LPs, $K = \mathbb{R}^n_+$; for SDPs, $K = \mathbb{S}^n_+$.
 
 \begin{defi}[Second-order cone program]
   A second-order cone program or SOCP is an optimization problem of the form
@@ -791,13 +798,14 @@ Both LPs and SDPs are special cases of conic programming. For LPs, $K = \mathbb{
   \end{array} 
   \]
 \end{defi}
-This is indeed a cone program. Recall the second-order cone $Q = \{(x,t): \Vert x \Vert_2 \leq t \}$, we have 
+
+\noindent This is indeed a cone program. Recall the second-order cone $Q = \{(x,t): \Vert x \Vert_2 \leq t \}$, we have 
 \begin{equation}
   \Vert D_i(x) + d_i \Vert_2 \leq e_i^T x + f_i \Longleftrightarrow (D_i(x) + d_i, e_i^T x + f_i) \in Q_i \nonumber
 \end{equation}
 for second-order cone $Q_i$ of appropriate dimensions. Now take $K = Q_1 \times \cdots \times Q_p$.
 
-Observe that every LP is an SOCP and every SOCP is an SDP. Turns out that 
+\noindent Observe that every LP is an SOCP and every SOCP is an SDP. Turns out that 
 \begin{equation}
   \|x\|_{2} \leq t \Longleftrightarrow\left[\begin{array}{cc}t I & x \\x^{T} & t\end{array}\right] \succeq 0 \nonumber 
 \end{equation}
@@ -807,7 +815,7 @@ hence any SOCP constraint can be written as an SDP constraint. The above is a sp
 \end{equation}
 for $A, C$ symmetric and $C \succ  0$.
 
-In addition, QPs are SOCPs, which can be seen by rewriting a QP as
+\noindent In addition, QPs are SOCPs, which can be seen by rewriting a QP as
 \begin{equation}
   \begin{array}{ll}
     \min\limits_{x, t} & c^T x + t \\
@@ -819,4 +827,167 @@ now write $\frac{1}{2}x^TQx \leq t \Leftrightarrow  \left\|\left(\frac{1}{\sqrt{
 \begin{equation}
   \text{LPs} \subseteq \text{QPs} \subseteq \text{SOCPs} \subseteq \text{SDPs} \subseteq \text{Conic programs} \nonumber
 \end{equation}
+
+\section{Gradient Descent}
+\subsection{Basic concept}
+Consider the unconstrained, smooth convex optimization
+\begin{equation}
+  \min_x f(x) \nonumber
+\end{equation}
+where $f$ is convex and differentiable with $\text{dom}(f)=\mathbb{R}^n$. Denote optimal criterion value by $f^*= \min_x f(x)$, and solution by $x^*$.
+
+\begin{defi}[Gradient descent] 
+  Choose initial point $x^{(0)} \in \mathbb{R}^n$, repeat:
+  \[
+    x^{(k)} = x^{(k-1)} -t_k\cdot \nabla f(x^{(k-1)}), \ \ k=1,2,3,\ldots \nonumber
+  \]
+  Stop at some point.
+\end{defi}
+
+\noindent The second-order Taylor expansion of $f$ is
+\begin{equation}
+  f(y) \approx f(x) + \nabla f(x)^T(y-x) + \dfrac{1}{2}(y-x)\nabla^2 f(x)(y-x) \nonumber
+\end{equation}
+
+\noindent Consider the Quadratic approximation of $f$, replacing $\nabla^2 f(x)$ by $\tfrac{1}{t} I$ (replacing the curvature given by the Hessian with a much simpler notion of curvature - something spherical), we have 
+\begin{equation}
+  f(y) \approx f(x) + \nabla f(x)^T(y-x) + \dfrac{1}{2t}\Vert y-x \Vert^2 \nonumber
+\end{equation}
+where $f(x) + \nabla f(x)^T(y-x)$ is the linear approximation to $f$ and $\tfrac{1}{2t}\Vert y-x \Vert^2 \nonumber$ is the proximity term to $x$ with weight $\tfrac{1}{2t}$. This is a convex quadratic, we can minimize it by setting its gradient to zero, i.e.
+\begin{equation}
+  \dfrac{\partial f(y)}{ \partial f(x)} \approx \nabla f(x) + \dfrac{1}{t} (y-x) = 0 \\
+  \Rightarrow y = x - t\nabla f(x)  \nonumber
+\end{equation}
+This gives us the gradient descent update rule. In other words, gradient descent actually chooses the next point to minimize this overall $y$. As shown in below figure, the blue point is moved to the point ont the curve directly below the red point.
+\begin{figure}[htbp] 
+  \centering 
+  \includegraphics[width=0.4\textwidth]{img/gradient _descent _update.pdf} 
+\end{figure}
+
+\subsection{Step sizes}
+\subsubsection{Fixed step size}
+The simplest strategy is to take the step sizes $t_k$ to be fixed. However, if $t_k$ is too large, gradient descent can diverge, if $t_k$ is too small, gradient descent can be slow to converge.
+\subsubsection{Backtracking line search}
+One way to adaptively choose the step size is to use backtracking line search:
+\begin{enumerate}
+  \item Fix parameters $0 < \beta < 1$ and $0 < \alpha \leq \tfrac{1}{2}$
+  \item At each iteration, start with $t = t_{init}$ (something relatively large), and while 
+  \[
+  f(x-t \nabla f(x)) > f(x) - \alpha t \Vert \nabla f(x) \Vert_2^2 \nonumber
+  \]
+  shirk $t = \beta t$. Else perform gradient descent update
+  \[
+  x^+ = x - t \nabla f(x)
+  \] 
+\end{enumerate}
+The update criterion above denotes that if the progress we make by going from $x$ to $x - t\nabla f(x)$ is bigger than the progress we had $f(x) - \alpha t \Vert \nabla f(x)$, then we make $t$ smaller $\beta t$. This method is simple and tends to work well in practice (further simplification: just take $\alpha = \tfrac{1}{2}$).
+\begin{figure}[htbp] 
+  \centering 
+  \includegraphics[width=0.6\textwidth]{img/backtracking_line_search.pdf} 
+\end{figure}
+
+\subsubsection{Exact line search}
+We could also choose step to do the best we can along direction of negative gradient, called exact line search:
+\begin{equation}
+  t = \mathop{\arg\max}\limits_{s \geq 0} f(x - s\nabla f(x)) \nonumber
+\end{equation}
+Approximations to exact line search are typically not as efficient as backtracking, and it's typically not worth it.
+
+\subsection{Convergence analysis}
+\subsubsection{Gradient descent convergence}
+Assume $f$ is convex and differentiable with $\text{dom}(f)=\mathbb{R}^n$, $\nabla f $ is Lipschitz continuous with constant $L \geq 0$, for any $x, y$:
+\begin{equation}
+  \Vert \nabla f(x) - \nabla f(y) \Vert_2 \leq L \Vert x-y \Vert_2 \nonumber
+\end{equation}
+If $f$ is twice differentiable:
+\begin{equation}
+   \nabla^2 f(x) \preceq L I \nonumber
+\end{equation}
+\begin{thm}
+  Gradient descent with fixed step size $t \leq 1 / L$ satisfies
+  \[
+  f(x^{(k)}) - f^* \leq \dfrac{\Vert x^{(0)} - x^* \Vert_2^2}{2tk}
+  \]
+  and same result holds for backtracking, with $t$ replaced bt $\beta/ L$.
+\end{thm}
+We say gradient descent has converge rate $O(1/ k)$. That is, it finds $\epsilon$-suboptimal point in $O(1/ \epsilon)$ iterations.
+\subsubsection{Analysis for strong convexity}
+Assume Lipschitz gradient as before and $f$ has strong convexity:
+\begin{thm}
+  Gradient descent with fixed step size $t \leq 2 / (m+L)$ or with backtracking line search satisfies
+  \[
+  f(x^{(k)}) - f^* \leq \gamma^k \dfrac{L}{2}\Vert x^{(0)} - x^* \Vert_2^2 \nonumber
+  \]
+  where $0 < \gamma < 1$.
+\end{thm}
+\noindent Convergence rate under strong convexity is $O(\gamma^k)$, it finds $\epsilon$-suboptimal point in $O(log(1/ \epsilon))$ iterations. This is called linear convergence, because objective versus iteration curves loos linear on semi-log plot.
+
+\noindent \textbf{Note}: denote $\gamma = O(1-m / L)$, thus convergence rate can be written as 
+\begin{equation}
+  O(\dfrac{L}{m} \log(1 / \epsilon)) \nonumber
+\end{equation}
+This means higher condition number $L / m$  will lead to slower rate. This is due to the Hessian being ellipsoidal and not spherical, so its optimization is slow. It is not only true of in theory, but also very apparent in practice too.
+
+\noindent A look at the conditions for $f(\beta) = \dfrac{1}{2} \Vert y - X \beta \Vert_2^2$
+\begin{enumerate}
+  \item Lipschitz continuity of $\nabla f$:
+  \begin{enumerate}
+    \item $\nabla^2 f(x) \leq L I$
+    \item As $\nabla^2 f(\beta) = X^T X$, we have $L = \lambda_{max}(X^T X)$
+  \end{enumerate}
+  \item Strong convexity of $f$:
+  \begin{enumerate}
+    \item $\nabla^2 f(x) \geq m I$
+   \item As $\nabla^2 f(\beta) = X^T X$, we have $m = \lambda_{min}(X^T X)$
+   \item If $X$ is wide ($X$ is $n \times p$ with $p > n$), then  $\lambda_{min} (X^T X) = 0$ and $f$ can not be strongly convex
+   \item Even if $\delta_{min}(X) > 0$, we can have large condition number $\dfrac{L}{m} = \dfrac{\lambda_{max} (X^T X)}{\lambda_{min} (X^T X)}$
+   \begin{enumerate}
+    \item If there are correlated features, $L / m$ increases which leads to slow convergence
+    \item If the features are orthogonal, $L / m = 1$ which leads to fast convergence 
+   \end{enumerate} 
+  \end{enumerate}
+\end{enumerate}
+\noindent \textbf{Note}: gradient descent always finds regularised solution to the under-parameterised problem.
+
+\noindent Consider the least squares loss $f(\beta) = \dfrac{1}{2} \Vert y - X \beta \Vert_2^2$, the gradient descent update would be $\beta^{(k)} = \beta^{(k-1)} + t X^T (y - X \beta^{(k-1)})$. Suppose $p > n$, $X \beta = y$ has infinitely many solutions in $\overset{-}{\beta} + null(X)$. If we set $\beta^{(0)} = 0$, then the solution $\beta^{(k)}$ converges to argmin\{$\Vert \beta \Vert_2 : X\beta =y$\} as $k$ tends to $\infty$. The reason for this is that since we started in the row space of $X$, we will end in the row space of $X$.
+
+\subsection{Practicalities}
+Stopping rule: stop when $\Vert \nabla f(x) \Vert_2$ is small:
+\begin{enumerate}
+  \item $\nabla f(x^*) = 0$ at solution $x^*$
+  \item If $f$ is strongly convex with $m$, $\Vert \nabla f(x) \Vert_2 \leq \sqrt[]{2m \epsilon} \Rightarrow f(x) - f^* \leq \epsilon$ 
+\end{enumerate}
+\noindent Pros and cons of gradient descent:
+\begin{enumerate}
+  \item Pro: simple idea, and each iteration is cheap (usually)
+  \item Pro: fast for well-conditioned, strongly convex problems
+  \item Con: can often be slow, because many interesting problems
+  aren't strongly convex or well-conditioned
+  \item Con: can't handle nondifferentiable functions
+\end{enumerate}
+
+\subsection{Nesterov acceleration}
+Gradient descent has $O(1 / \epsilon)$ convergence rate over problem class of convex, differentiable functions with Lipschitz gradients.
+First-order method: update $x^{(k)}$ iteratively
+\begin{equation}
+  x^{(0)} + \text{span} \{\nabla f(x^{(0)}), \nabla f(x^{(1)}), \cdots, \nabla f(x^{(k-1)}) \} \nonumber
+\end{equation}
+\begin{thm} \textbf{(Nesterov)} For any $k \leq \dfrac{n-1}{2}$ and any starting point $x^{(0)}$, there is a function $f$ in the
+  problem class such that any first-order method satisfies:
+  \[
+    f(x^{(k)}) - f^* \geq \dfrac{3L \Vert x^{(0)} - x^* \Vert_2^2}{32(k+1)^2} \nonumber
+  \]
+\end{thm}
+\noindent Gradient descent is a type of first-order method, which can be proved using induction. Since gradient descent converges at $O(1 / \epsilon)$, The above Theorem shows that there are more optimal methods than gradient descent, which converge at a rate of $O(1 / \sqrt[]{\epsilon} )$.
+
+\subsection{Analysis for nonconvex case}
+Assume $f$ is differentiable with Lipschitz gradient, now nonconvex. Instead of optimality, we settle for a $\epsilon$-substationary point solution, $\Vert \nabla f(x) \Vert_2 \leq \epsilon$
+\begin{thm}
+  Gradient descent with fixed step size $t \leq 1/ L$ satisfies:
+  \[
+    \mathop{\min}\limits_{i=0,\cdots,k} \Vert \nabla f(x^{(i)})\Vert_2 \leq \sqrt[]{\dfrac{2(f(x^{(0)}) - f^*)}{t(k+1)}} \nonumber
+  \]
+\end{thm}
+Thus, the gradient descent has convergence rate $O(\dfrac{1}{\sqrt[]{k}})$ or $O(\dfrac{1}{\epsilon^2})$. This rate cannot be improved (over class of differentiable functions with Lipschitz gradients) by any deterministic algorithm.
+
 \end{document}
